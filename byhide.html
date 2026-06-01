@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BYHIDE · Internet Radio With Real Spatial Sound</title>
+<meta name="description" content="The world's first internet radio with real 3D spatial audio. A proprietary on-device engine, four listening modes, dynamic motion, 140+ curated stations. By Laboratorios Zorion.">
+<meta property="og:title" content="BYHIDE · Internet Radio With Real Spatial Sound">
+<meta property="og:description" content="Four listening modes. Dynamic 3D motion. 140+ curated stations. The impossible, working.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,500;9..144,1,400&family=Space+Mono:wght@400;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050507; --ink:#f4f3f0; --muted:#8a8a96;
+    --line:rgba(255,255,255,.08);
+    --gold:#E8C36B; --violet:#A06BE8; --cyan:#5BC8E8;
+    --orbit-a:#48DEB1; --orbit-b:#DD48DE; --orbit-c:#B4DE48;
+    --display:'Fraunces',serif; --body:'Manrope',sans-serif; --mono:'Space Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;background:
+      radial-gradient(55% 45% at 80% 6%, rgba(160,107,232,.12), transparent 60%),
+      radial-gradient(50% 40% at 10% 28%, rgba(232,195,107,.07), transparent 60%),
+      radial-gradient(60% 55% at 50% 115%, rgba(91,200,232,.06), transparent 60%);
+      pointer-events:none;z-index:0}
+  body::after{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.04;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .wrap{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:0 28px}
+
+  nav{display:flex;align-items:center;justify-content:space-between;padding:28px 0}
+  .brand{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+  .brand b{font-weight:700;color:var(--gold)}
+  .navlinks{display:flex;gap:26px}
+  .navlinks a{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
+  .navlinks a:hover{color:var(--ink)}
+
+  /* hero */
+  header{padding:8vh 0 6vh;display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(91,200,232,.3);border-radius:999px;padding:6px 14px;margin-bottom:30px}
+  h1{font-family:var(--display);font-weight:400;font-size:clamp(2.5rem,5.5vw,4.4rem);line-height:1.02;letter-spacing:-.02em}
+  h1 em{font-style:italic;color:transparent;background:linear-gradient(100deg,var(--orbit-a),var(--orbit-b) 55%,var(--orbit-c));-webkit-background-clip:text;background-clip:text}
+  .lede{margin-top:28px;font-size:1.14rem;color:#cfcfd6;max-width:46ch}
+  .sub{margin-top:14px;font-family:var(--mono);font-size:12.5px;color:var(--muted);letter-spacing:.03em}
+  .cta{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-decoration:none;border-radius:11px;padding:14px 24px;transition:transform .3s,border-color .3s}
+  .btn-primary{background:linear-gradient(100deg,var(--violet),var(--gold));color:#0a0a0c;font-weight:700}
+  .btn-primary:hover{transform:translateY(-2px)}
+  .btn-ghost{border:1px solid var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:rgba(255,255,255,.35)}
+  .hero-shot{justify-self:center;max-width:300px;width:100%;border-radius:30px;border:1px solid var(--line);box-shadow:0 40px 90px -30px rgba(160,107,232,.5)}
+
+  .sec-lbl{display:flex;align-items:center;gap:16px;margin:0 0 40px;font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+  .sec-lbl::before{content:attr(data-n);color:var(--violet)}
+  .sec-lbl::after{content:"";flex:1;height:1px;background:var(--line)}
+  section{padding:6vh 0}
+  h2{font-family:var(--display);font-weight:400;font-size:clamp(1.9rem,4vw,3rem);letter-spacing:-.015em;max-width:18ch;line-height:1.08}
+  h2 i{font-style:italic;color:var(--gold)}
+  .intro{margin-top:22px;max-width:56ch;color:#bdbdc6;font-size:1.05rem}
+
+  /* modes */
+  .modes{margin-top:50px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .mode{border:1px solid var(--line);border-radius:16px;padding:26px 22px;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent);transition:transform .35s,border-color .35s}
+  .mode:hover{transform:translateY(-4px)}
+  .mode .name{font-family:var(--mono);font-weight:700;font-size:1.15rem;letter-spacing:.1em}
+  .mode .hint{margin-top:8px;font-size:.92rem;color:var(--muted)}
+  .mode.m1 .name{color:#cfcfd6} .mode.m1:hover{border-color:rgba(207,207,214,.4)}
+  .mode.m2 .name{color:var(--cyan)} .mode.m2:hover{border-color:rgba(91,200,232,.5)}
+  .mode.m3 .name{color:var(--gold)} .mode.m3:hover{border-color:rgba(232,195,107,.5)}
+  .mode.m4 .name{color:var(--violet)} .mode.m4:hover{border-color:rgba(160,107,232,.6)}
+
+  /* feature split */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center;margin-top:30px}
+  .split.rev{direction:rtl}.split.rev>*{direction:ltr}
+  .split img{width:100%;max-width:300px;justify-self:center;border-radius:26px;border:1px solid var(--line);box-shadow:0 30px 70px -28px rgba(0,0,0,.8)}
+  .split h3{font-family:var(--display);font-weight:500;font-size:1.7rem;letter-spacing:-.01em}
+  .split p{margin-top:16px;color:#bdbdc6;font-size:1.02rem;max-width:46ch}
+  .chips{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px}
+  .chip{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 13px}
+
+  /* spec grid */
+  .specs{margin-top:44px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .spec{border:1px solid var(--line);border-radius:16px;padding:28px 24px;background:linear-gradient(180deg,rgba(255,255,255,.018),transparent)}
+  .spec .big{font-family:var(--display);font-size:2.1rem;color:var(--ink)}
+  .spec .cap{margin-top:6px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .spec p{margin-top:12px;font-size:.95rem;color:#b3b3bd}
+
+  /* price */
+  .price{margin-top:40px;border:1px solid var(--line);border-radius:22px;padding:46px 40px;text-align:center;background:radial-gradient(80% 120% at 50% 0%, rgba(160,107,232,.1), transparent 70%)}
+  .price .tag{font-family:var(--display);font-size:3rem;color:var(--gold)}
+  .price .per{font-family:var(--mono);font-size:13px;color:var(--muted);letter-spacing:.06em}
+  .price .cmp{margin-top:20px;font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.04em}
+  .price ul{list-style:none;margin:26px auto 0;max-width:420px;text-align:left}
+  .price li{padding:9px 0;border-bottom:1px solid var(--line);font-size:.98rem;color:#cfcfd6}
+  .price li::before{content:"◆ ";color:var(--violet)}
+
+  footer{border-top:1px solid var(--line);margin-top:7vh;padding:46px 0 70px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px}
+  footer .who{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;color:var(--muted)}
+  footer .links{display:flex;gap:24px;flex-wrap:wrap}
+  footer a{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--muted);text-decoration:none;transition:color .3s}
+  footer a:hover{color:var(--ink)}
+
+  @media(max-width:820px){
+    header{grid-template-columns:1fr;gap:40px}
+    .hero-shot{max-width:260px;order:-1}
+    .modes{grid-template-columns:repeat(2,1fr)}
+    .split,.split.rev{grid-template-columns:1fr;direction:ltr}
+    .split img{order:-1}
+    .specs{grid-template-columns:1fr}
+    .navlinks{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <div class="brand">RADIO <b>BYHIDE</b></div>
+    <div class="navlinks">
+      <a href="#engine">Engine</a>
+      <a href="#motion">Motion</a>
+      <a href="#catalog">Catalog</a>
+      <a href="#premium">Premium</a>
+      <a href="https://damiantorresr.github.io">Zorion</a>
+    </div>
+  </nav>
+
+  <header>
+    <div>
+      <span class="badge">Laboratorios Zorion · Demonstration · 2026</span>
+      <h1>Internet radio with <em>real spatial</em> sound.</h1>
+      <p class="lede">A proprietary on-device engine turns any station into a three-dimensional listening space. Four modes, dynamic motion, zero cloud processing.</p>
+      <p class="sub">The impossible, working.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#premium">Coming soon to Play Store ↓</a>
+        <a class="btn btn-ghost" href="#engine">See the engine →</a>
+      </div>
+    </div>
+    <img class="hero-shot" src="screenshots/byhide-home.jpg" alt="Radio Byhide main screen playing a station with the four listening modes and spatial visualizer">
+  </header>
+
+  <section id="engine">
+    <div class="sec-lbl" data-n="01">The engine</div>
+    <h2>Four ways to <i>hear</i> the same station.</h2>
+    <p class="intro">Every stream passes through a custom DSP engine that runs entirely on your device — no recompression, no resampling, no server in the middle. Each mode is a deeper layer of spatial rendering.</p>
+    <div class="modes">
+      <div class="mode m1"><div class="name">PURE</div><div class="hint">Direct, reference sound.</div></div>
+      <div class="mode m2"><div class="name">WIDE</div><div class="hint">Expanded stereo field.</div></div>
+      <div class="mode m3"><div class="name">ATLAS</div><div class="hint">Full immersive detail.</div></div>
+      <div class="mode m4"><div class="name">ORBIT</div><div class="hint">Dynamic 3D motion.</div></div>
+    </div>
+  </section>
+
+  <section id="motion">
+    <div class="sec-lbl" data-n="02">Dimensional motion</div>
+    <div class="split">
+      <div>
+        <h3>Sound that moves around you.</h3>
+        <p>ORBIT places the audio on a moving plane and lets you steer it. Choose a preset or shape the motion yourself — speed, width, depth, and height, live, with the spatial position drawn on screen.</p>
+        <div class="chips">
+          <span class="chip">ZEN</span><span class="chip">OCEAN</span><span class="chip">VORTEX</span><span class="chip">LOCO</span><span class="chip">PURE</span>
+        </div>
+        <div class="chips">
+          <span class="chip">Speed</span><span class="chip">Width</span><span class="chip">Depth</span><span class="chip">Height</span>
+        </div>
+      </div>
+      <img src="screenshots/byhide-equalizer.jpg" alt="Immersive equalizer with ZEN OCEAN VORTEX presets, live speed width depth height sliders and 256-bin spectrum">
+    </div>
+  </section>
+
+  <section>
+    <div class="split rev">
+      <div>
+        <h3>A spectrum that breathes.</h3>
+        <p>A 256-bin real-time analyzer paints the sound across four bands — low, mid, high, and air — and re-colors itself for the mode you're in. It's not decoration: it's the engine, visible.</p>
+        <div class="chips">
+          <span class="chip">256 bins</span><span class="chip">LOW · MID · HIGH · AIR</span><span class="chip">Mode-aware</span>
+        </div>
+      </div>
+      <img src="screenshots/byhide-spectrum.jpg" alt="256-bin multicolor spectrum analyzer with low mid high air bands during ORBIT mode">
+    </div>
+  </section>
+
+  <section id="catalog">
+    <div class="sec-lbl" data-n="03">The catalog</div>
+    <h2>Curated, self-healing, <i>always alive</i>.</h2>
+    <p class="intro">A living catalog that validates itself, removes dead streams, and falls over to mirrors so the music never stops. Search by name, genre, and country at once — or reach tens of thousands more on demand.</p>
+    <div class="specs">
+      <div class="spec"><div class="big">140+</div><div class="cap">Curated stations</div><p>Hand-picked legends plus dynamic global and local stations, validated automatically every 7 days.</p></div>
+      <div class="spec"><div class="big">50,000+</div><div class="cap">On-demand reach</div><p>Extended web search opens the door to tens of thousands more, each verified live before it plays.</p></div>
+      <div class="spec"><div class="big">99.9%</div><div class="cap">Availability</div><p>Multi-server failover and a self-healing catalog keep streams up even when sources go down.</p></div>
+    </div>
+    <div class="split" style="margin-top:54px">
+      <div>
+        <h3>Yours to keep.</h3>
+        <p>Star any station into Favorites for one-tap access. Record broadcasts and let Byhide file them by listening mode — your own library, organized by how it sounded.</p>
+        <div class="chips">
+          <span class="chip">Favorites</span><span class="chip">Recording</span><span class="chip">Per-mode playlist</span><span class="chip">Loop mode</span>
+        </div>
+      </div>
+      <img src="screenshots/byhide-playlist.jpg" alt="Playlist screen with recordings organized by PURE WIDE ATLAS ORBIT modes and play all button">
+    </div>
+  </section>
+
+  <section id="premium">
+    <div class="sec-lbl" data-n="04">Access</div>
+    <h2>Free to listen. <i>Premium to go further.</i></h2>
+    <div class="price">
+      <div class="tag">$12.99</div>
+      <div class="per">per year</div>
+      <ul>
+        <li>All listening modes unlocked — ATLAS &amp; ORBIT</li>
+        <li>Unlimited recording, filed by mode</li>
+        <li>Priority feature updates</li>
+        <li>No ads · no tracking · no profiling</li>
+      </ul>
+      <div class="cmp">For comparison · Spotify $120/yr · TIDAL $240/yr · Apple Music $120/yr</div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="who">Alex Damián Torres Robalino · Laboratorios Zorion · © 2026</div>
+    <div class="links">
+      <a href="https://damiantorresr.github.io">Zorion</a>
+      <a href="https://damiantorresr.github.io/personalities/">Personalities</a>
+      <a href="https://damiantorresr.github.io/transformer-codec/">Transformer</a>
+      <a href="mailto:laboratorioszorion@gmail.com">Contact</a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
